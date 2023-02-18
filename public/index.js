@@ -1,3 +1,4 @@
+// map grid
 const map = [
   [0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 1],
@@ -8,12 +9,14 @@ const map = [
   // [1, 1, 1, 1, 1, 1, 1],
 ];
 
+// resolution, tick rate, map scale, and fov settings
 const SCREEN_WIDTH = window.innerWidth;
 const SCREEN_HEIGHT = window.innerHeight;
 const TICK = 30;
 const CELL_SIZE = 32;
 const FOV = toRadians(90);
 
+// colors
 const COLORS = {
   floor: "#d52b1e", // "#ff6361"
   ceiling: "#ffffff", // "#012975",
@@ -22,17 +25,21 @@ const COLORS = {
   rays: "#ffa600",
 };
 
+// textures
 const TEXTURES = {
   test: "./logo512.png"
 }
 
+// player settings
 const player = {
   x: CELL_SIZE * 1.5,
   y: CELL_SIZE * 2,
   angle: toRadians(0),
-  speed: 0,
+  speedY: 0,
+  speedX: 0,
 };
 
+// init canvas with screen resolution
 const canvas = document.createElement("canvas");
 canvas.setAttribute("width", SCREEN_WIDTH);
 canvas.setAttribute("height", SCREEN_HEIGHT);
@@ -40,11 +47,13 @@ document.body.appendChild(canvas);
 
 const context = canvas.getContext("2d");
 
+// color for clear canvas
 function clearScreen() {
-  context.fillStyle = "red";
+  context.fillStyle = "black";
   context.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
+// render minimap
 function renderMinimap(posX = 0, posY = 0, scale, rays) {
   const cellSize = scale * CELL_SIZE;
   map.forEach((row, y) => {
@@ -201,8 +210,10 @@ function getRays() {
 }
 
 function movePlayer() {
-  player.x += Math.cos(player.angle) * player.speed;
-  player.y += Math.sin(player.angle) * player.speed;
+  player.x += Math.cos(player.angle) * player.speedY;
+  player.y += Math.sin(player.angle) * player.speedY;
+  player.x += Math.cos(player.angle + toRadians(90)) * player.speedX;
+  player.y += Math.sin(player.angle + toRadians(90)) * player.speedX;
 }
 
 function renderScene(rays) {
@@ -236,6 +247,7 @@ function renderScene(rays) {
   });
 }
 
+// main loop
 function gameLoop() {
   clearScreen();
   movePlayer();
@@ -244,27 +256,37 @@ function gameLoop() {
   renderMinimap(0, 0, 0.75, rays);
 }
 
+// loop speed limiter
 setInterval(gameLoop, TICK);
 
+// controls
 canvas.addEventListener("click", () => {
   canvas.requestPointerLock();
 });
 
 document.addEventListener("keydown", (e) => {
   if (e.key === "w") {
-    player.speed = 2;
+    player.speedY = 2;
   }
   if (e.key === "s") {
-    player.speed = -2;
+    player.speedY = -2;
+  }
+  if (e.key === "a") {
+    player.speedX = -2;
+  }
+  if (e.key === "d") {
+    player.speedX = 2;
   }
 });
 
 document.addEventListener("keyup", (e) => {
-  if (e.key === "w" || e.key === "s") {
-    player.speed = 0;
+  if (e.key === "w" || e.key === "s" || e.key === "a" || e.key === "d") {
+    player.speedY = 0;
+    player.speedX = 0;
   }
 });
 
 document.addEventListener("mousemove", function (event) {
   player.angle += toRadians(event.movementX);
 });
+
