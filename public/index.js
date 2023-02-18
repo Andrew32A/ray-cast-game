@@ -31,7 +31,8 @@ const COLORS = {
 // textures
 const TEXTURES = {
   test: "./logo512.png",
-  wall: "./textures/brick_wall.jpeg"
+  wall: "./textures/brick_wall.jpeg",
+  ceiling: "./textures/space.avif"
 }
 
 // player settings
@@ -221,24 +222,43 @@ function movePlayer() {
   player.y += Math.sin(player.angle + toRadians(90)) * player.speedX;
 }
 
-// render first person view
+// store the texture images
+const textureImages = {
+  "wall": new Image(),
+  "ceiling": new Image(),
+  // add other textures here
+};
+
+// source for each texture images
+textureImages["wall"].src = TEXTURES["wall"];
+textureImages["ceiling"].src = TEXTURES["ceiling"];
+
+
+// wait for all texture images to load before rendering
+Promise.all(Object.values(textureImages).map(img => {
+  return new Promise(resolve => {
+    img.onload = resolve;
+  });
+})).then(() => {
+  renderScene(rays);
+});
+
 function renderScene(rays) {
   rays.forEach((ray, i) => {
     const distance = fixFishEye(ray.distance, ray.angle, player.angle);
     const wallHeight = ((CELL_SIZE * 5) / distance) * 277;
 
-    // load wall texture
-    const wallImage = new Image();
-    wallImage.src = TEXTURES["wall"];
+    // get the appropriate texture image from the object
+    const wallImage = textureImages["wall"];
+    const ceilingImage = textureImages["ceiling"]; // get ceiling texture image
 
-    // draw walls
-    context.drawImage(
-      wallImage,
-      i,
-      SCREEN_HEIGHT / 2 - wallHeight / 2,
-      1,
-      wallHeight
-    );
+    // create a pattern with the wall texture image
+    const pattern = context.createPattern(wallImage, "repeat");
+    const ceilingPattern = context.createPattern(ceilingImage, "repeat"); // create ceiling pattern
+
+    // draw walls with the pattern
+    context.fillStyle = pattern;
+    context.fillRect(i, SCREEN_HEIGHT / 2 - wallHeight / 2, 1, wallHeight);
 
     // draw floor
     context.fillStyle = COLORS.floor;
@@ -248,7 +268,9 @@ function renderScene(rays) {
       1,
       SCREEN_HEIGHT / 2 - wallHeight / 2
     );
-    context.fillStyle = COLORS.ceiling;
+    
+    // draw ceiling with the ceiling pattern
+    context.fillStyle = ceilingPattern;
     context.fillRect(i, 0, 1, SCREEN_HEIGHT / 2 - wallHeight / 2);
   });
 }
