@@ -11,11 +11,10 @@ function loadGame() {
 
 function App() {  
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className="menuWrapper">
+      <header className="menuHeader">
         <Router>
-          <Link to="/game.html" onClick={loadGame}
-          >Start</Link>
+          <Link to="/game.html" className='startButton' onClick={loadGame}>Start</Link>
         </Router>
       </header>
     </div>
