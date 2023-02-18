@@ -21,17 +21,18 @@ const FOV = toRadians(90);
 
 // colors
 const COLORS = {
-  floor: "#d52b1e", // "#ff6361"
-  ceiling: "#ffffff", // "#012975",
-  wall: "#013aa6", // "#58508d"
-  wallDark: "#012975", // "#003f5c"
+  floor: "#654321", // "#ff6361"
+  ceiling: "#140d07", // "#012975",
+  wall: "#332211", // "#58508d"
+  wallDark: "#281b0d", // "#003f5c"
   rays: "#ffa600",
 };
 
 // textures
 const TEXTURES = {
   test: "./logo512.png",
-  wall: "./textures/brick_wall.jpeg"
+  wall: "./textures/brick_wall.jpeg",
+  wallDark: "./textures/brick_wall.jpeg",
 }
 
 // player settings
@@ -226,21 +227,8 @@ function renderScene(rays) {
   rays.forEach((ray, i) => {
     const distance = fixFishEye(ray.distance, ray.angle, player.angle);
     const wallHeight = ((CELL_SIZE * 5) / distance) * 277;
-
-    // load wall texture
-    const wallImage = new Image();
-    wallImage.src = TEXTURES["wall"];
-
-    // draw walls
-    context.drawImage(
-      wallImage,
-      i,
-      SCREEN_HEIGHT / 2 - wallHeight / 2,
-      1,
-      wallHeight
-    );
-
-    // draw floor
+    context.fillStyle = ray.vertical ? COLORS.wallDark : COLORS.wall;
+    context.fillRect(i, SCREEN_HEIGHT / 2 - wallHeight / 2, 1, wallHeight);
     context.fillStyle = COLORS.floor;
     context.fillRect(
       i,
