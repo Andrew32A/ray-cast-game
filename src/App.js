@@ -14,7 +14,8 @@ function App() {
     <div className="menuWrapper">
       <header className="menuHeader">
         <Router>
-          <Link to="/game.html" className='startButton' onClick={loadGame}>Start</Link>
+          {/* ray-cast-game/ is necessary for github pages, remove it if only using npm start */}
+          <Link to="ray-cast-game/game.html" className='startButton' onClick={loadGame}>Start</Link>
         </Router>
       </header>
     </div>
