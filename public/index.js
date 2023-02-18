@@ -1,12 +1,15 @@
 // map grid
 const map = [
-  [0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 1],
-  [0, 0, 0, 0, 0, 0, 0],
-  // [1, 0, 0, 0, 0, 0, 1],
-  // [1, 0, 1, 0, 1, 0, 1],
-  // [1, 0, 1, 0, 1, 0, 1],
-  // [1, 1, 1, 1, 1, 1, 1],
+  [1, 1, 1, 1, 1, 1, 1],
+  [1, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 1],
+  [1, 0, 1, 0, 1, 0, 1],
+  [1, 0, 1, 0, 1, 0, 1],
+  [1, 1, 1, 1, 1, 1, 1],
 ];
 
 // resolution, tick rate, map scale, and fov settings
@@ -27,7 +30,8 @@ const COLORS = {
 
 // textures
 const TEXTURES = {
-  test: "./logo512.png"
+  test: "./logo512.png",
+  wall: "./textures/brick_wall.jpeg"
 }
 
 // player settings
@@ -209,6 +213,7 @@ function getRays() {
   });
 }
 
+// player x and y movement
 function movePlayer() {
   player.x += Math.cos(player.angle) * player.speedY;
   player.y += Math.sin(player.angle) * player.speedY;
@@ -216,6 +221,7 @@ function movePlayer() {
   player.y += Math.sin(player.angle + toRadians(90)) * player.speedX;
 }
 
+// render first person view
 function renderScene(rays) {
   rays.forEach((ray, i) => {
     const distance = fixFishEye(ray.distance, ray.angle, player.angle);
@@ -223,7 +229,7 @@ function renderScene(rays) {
 
     // load wall texture
     const wallImage = new Image();
-    wallImage.src = TEXTURES["test"];
+    wallImage.src = TEXTURES["wall"];
 
     // draw walls
     context.drawImage(
@@ -282,6 +288,11 @@ document.addEventListener("keydown", (e) => {
 document.addEventListener("keyup", (e) => {
   if (e.key === "w" || e.key === "s" || e.key === "a" || e.key === "d") {
     player.speedY = 0;
+  }
+});
+
+document.addEventListener("keyup", (e) => {
+  if (e.key === "a" || e.key === "d") {
     player.speedX = 0;
   }
 });

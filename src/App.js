@@ -1,5 +1,7 @@
+import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter as Router, Link } from 'react-router-dom';
 
 function App() {
   return (
@@ -17,6 +19,9 @@ function App() {
         >
           Learn React
         </a>
+        <Router>
+          <Link to="/game.html">Go to Page 2</Link>
+        </Router>
       </header>
     </div>
   );
