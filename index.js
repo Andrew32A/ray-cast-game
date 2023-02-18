@@ -274,7 +274,7 @@ document.addEventListener("keydown", (e) => {
 });
 
 document.addEventListener("keyup", (e) => {
-  if (e.key === "w" || e.key === "s" || e.key === "a" || e.key === "d") {
+  if (e.key === "w" || e.key === "s") {
     player.speedY = 0;
   }
 });
@@ -286,6 +286,6 @@ document.addEventListener("keyup", (e) => {
 });
 
 document.addEventListener("mousemove", function (event) {
-  player.angle += toRadians(event.movementX);
+  player.angle += toRadians(event.movementX) * 0.2;
 });
 
