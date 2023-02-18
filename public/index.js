@@ -5,23 +5,13 @@ const map = [
   // [1, 0, 0, 0, 0, 0, 1],
   // [1, 0, 1, 0, 1, 0, 1],
   // [1, 0, 1, 0, 1, 0, 1],
-  // [1, 0, 1, 1, 1, 1, 1],
-  // [1, 0, 1, 1, 1, 1, 1],
-  // [1, 0, 0, 0, 0, 0, 1],
-  // [1, 0, 1, 1, 0, 1, 1],
-  // [1, 0, 0, 0, 0, 0, 1],
-  // [1, 0, 1, 0, 1, 0, 1],
-  // [1, 0, 1, 0, 1, 0, 1],
   // [1, 1, 1, 1, 1, 1, 1],
 ];
 
 const SCREEN_WIDTH = window.innerWidth;
 const SCREEN_HEIGHT = window.innerHeight;
-
 const TICK = 30;
-
 const CELL_SIZE = 32;
-
 const FOV = toRadians(90);
 
 const COLORS = {
@@ -32,7 +22,7 @@ const COLORS = {
   rays: "#ffa600",
 };
 
-const IMG = {
+const TEXTURES = {
   test: "./logo512.png"
 }
 
@@ -220,20 +210,20 @@ function renderScene(rays) {
     const distance = fixFishEye(ray.distance, ray.angle, player.angle);
     const wallHeight = ((CELL_SIZE * 5) / distance) * 277;
 
-    // Create an image object for the wall
+    // load wall texture
     const wallImage = new Image();
-    wallImage.src = IMG["test"];
+    wallImage.src = TEXTURES["test"];
 
-    // Draw the image for the wall
+    // draw walls
     context.drawImage(
       wallImage,
       i,
       SCREEN_HEIGHT / 2 - wallHeight / 2,
-      3,
+      1,
       wallHeight
     );
 
-    // Draw the floor and ceiling colors as before
+    // draw floor
     context.fillStyle = COLORS.floor;
     context.fillRect(
       i,
@@ -245,7 +235,6 @@ function renderScene(rays) {
     context.fillRect(i, 0, 1, SCREEN_HEIGHT / 2 - wallHeight / 2);
   });
 }
-
 
 function gameLoop() {
   clearScreen();
