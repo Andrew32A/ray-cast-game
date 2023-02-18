@@ -21,10 +21,10 @@ const FOV = toRadians(90);
 
 // colors
 const COLORS = {
-  floor: "#d52b1e", // "#ff6361"
-  ceiling: "#ffffff", // "#012975",
-  wall: "#013aa6", // "#58508d"
-  wallDark: "#012975", // "#003f5c"
+  floor: "#654321", // "#ff6361"
+  ceiling: "#140d07", // "#012975",
+  wall: "#332211", // "#58508d"
+  wallDark: "#281b0d", // "#003f5c"
   rays: "#ffa600",
 };
 
@@ -32,7 +32,7 @@ const COLORS = {
 const TEXTURES = {
   test: "./logo512.png",
   wall: "./textures/brick_wall.jpeg",
-  ceiling: "./textures/space.avif"
+  wallDark: "./textures/brick_wall.jpeg",
 }
 
 // player settings
@@ -222,45 +222,13 @@ function movePlayer() {
   player.y += Math.sin(player.angle + toRadians(90)) * player.speedX;
 }
 
-// store the texture images
-const textureImages = {
-  "wall": new Image(),
-  "ceiling": new Image(),
-  // add other textures here
-};
-
-// source for each texture images
-textureImages["wall"].src = TEXTURES["wall"];
-textureImages["ceiling"].src = TEXTURES["ceiling"];
-
-
-// wait for all texture images to load before rendering
-Promise.all(Object.values(textureImages).map(img => {
-  return new Promise(resolve => {
-    img.onload = resolve;
-  });
-})).then(() => {
-  renderScene(rays);
-});
-
+// render first person view
 function renderScene(rays) {
   rays.forEach((ray, i) => {
     const distance = fixFishEye(ray.distance, ray.angle, player.angle);
     const wallHeight = ((CELL_SIZE * 5) / distance) * 277;
-
-    // get the appropriate texture image from the object
-    const wallImage = textureImages["wall"];
-    const ceilingImage = textureImages["ceiling"]; // get ceiling texture image
-
-    // create a pattern with the wall texture image
-    const pattern = context.createPattern(wallImage, "repeat");
-    const ceilingPattern = context.createPattern(ceilingImage, "repeat"); // create ceiling pattern
-
-    // draw walls with the pattern
-    context.fillStyle = pattern;
+    context.fillStyle = ray.vertical ? COLORS.wallDark : COLORS.wall;
     context.fillRect(i, SCREEN_HEIGHT / 2 - wallHeight / 2, 1, wallHeight);
-
-    // draw floor
     context.fillStyle = COLORS.floor;
     context.fillRect(
       i,
@@ -268,9 +236,7 @@ function renderScene(rays) {
       1,
       SCREEN_HEIGHT / 2 - wallHeight / 2
     );
-    
-    // draw ceiling with the ceiling pattern
-    context.fillStyle = ceilingPattern;
+    context.fillStyle = COLORS.ceiling;
     context.fillRect(i, 0, 1, SCREEN_HEIGHT / 2 - wallHeight / 2);
   });
 }
