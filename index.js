@@ -277,15 +277,17 @@ document.addEventListener("keyup", (e) => {
   if (e.key === "w" || e.key === "s") {
     player.speedY = 0;
   }
-});
-
-document.addEventListener("keyup", (e) => {
   if (e.key === "a" || e.key === "d") {
     player.speedX = 0;
   }
 });
 
+document.addEventListener("keyup", (e) => {
+
+});
+
+const mouseSensitivity = 0.05;
 document.addEventListener("mousemove", function (event) {
-  player.angle += toRadians(event.movementX) * 0.2;
+  player.angle += toRadians(event.movementX) * mouseSensitivity;
 });
 
