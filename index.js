@@ -2,9 +2,9 @@
 const map = [
   [1, 1, 1, 1, 1, 1, 1],
   [1, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 1, 1, 1, 1],
+  [1, 0, 0, 1, 0, 0, 1],
+  [1, 0, 0, 1, 0, 0, 1],
   [1, 0, 0, 0, 0, 0, 1],
   [1, 0, 0, 0, 0, 0, 1],
   [1, 0, 1, 0, 1, 0, 1],
@@ -17,7 +17,7 @@ const SCREEN_WIDTH = window.innerWidth;
 const SCREEN_HEIGHT = window.innerHeight;
 const TICK = 30;
 const CELL_SIZE = 32;
-const FOV = toRadians(90);
+const FOV = toRadians(75);
 
 // colors
 const COLORS = {
@@ -244,9 +244,9 @@ function renderScene(rays) {
 // main loop
 function gameLoop() {
   clearScreen();
-  movePlayer();
   const rays = getRays();
   renderScene(rays);
+  movePlayer();
   renderMinimap(0, 0, 0.75, rays);
 }
 
