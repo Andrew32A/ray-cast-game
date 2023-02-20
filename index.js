@@ -214,13 +214,27 @@ function getRays() {
   });
 }
 
-// player x and y movement
+// player x and y movement w/ collision
 function movePlayer() {
-  player.x += Math.cos(player.angle) * player.speedY;
-  player.y += Math.sin(player.angle) * player.speedY;
-  player.x += Math.cos(player.angle + toRadians(90)) * player.speedX;
-  player.y += Math.sin(player.angle + toRadians(90)) * player.speedX;
+  const nextX = player.x + Math.cos(player.angle) * player.speedY;
+  const nextY = player.y + Math.sin(player.angle) * player.speedY;
+  const nextX2 = nextX + Math.cos(player.angle + toRadians(90)) * player.speedX;
+  const nextY2 = nextY + Math.sin(player.angle + toRadians(90)) * player.speedX;
+
+  const cellX = Math.floor(nextX / CELL_SIZE);
+  const cellY = Math.floor(nextY / CELL_SIZE);
+  const cellX2 = Math.floor(nextX2 / CELL_SIZE);
+  const cellY2 = Math.floor(nextY2 / CELL_SIZE);
+
+  if (map[cellY][cellX] === 0 && map[cellY2][cellX2] === 0) {
+    player.x = nextX;
+    player.y = nextY;
+    player.x += Math.cos(player.angle + toRadians(90)) * player.speedX;
+    player.y += Math.sin(player.angle + toRadians(90)) * player.speedX;
+  }
 }
+
+
 
 // render first person view
 function renderScene(rays) {
@@ -244,9 +258,9 @@ function renderScene(rays) {
 // main loop
 function gameLoop() {
   clearScreen();
+  movePlayer();
   const rays = getRays();
   renderScene(rays);
-  movePlayer();
   renderMinimap(0, 0, 0.75, rays);
 }
 
@@ -280,10 +294,6 @@ document.addEventListener("keyup", (e) => {
   if (e.key === "a" || e.key === "d") {
     player.speedX = 0;
   }
-});
-
-document.addEventListener("keyup", (e) => {
-
 });
 
 const mouseSensitivity = 0.05;
