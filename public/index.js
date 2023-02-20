@@ -58,6 +58,19 @@ function clearScreen() {
   context.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
+// minimap toggle
+let miniMapDisplay = false;
+let counter = 0;
+function miniMapToggle() {
+  counter++
+  if (counter % 2 === 0) {
+      miniMapDisplay = false;
+  }
+  else {
+      miniMapDisplay = true;
+  }
+}
+
 // render minimap
 function renderMinimap(posX = 0, posY = 0, scale, rays) {
   const cellSize = scale * CELL_SIZE;
@@ -234,8 +247,6 @@ function movePlayer() {
   }
 }
 
-
-
 // render first person view
 function renderScene(rays) {
   rays.forEach((ray, i) => {
@@ -261,7 +272,9 @@ function gameLoop() {
   movePlayer();
   const rays = getRays();
   renderScene(rays);
-  renderMinimap(0, 0, 0.75, rays);
+  if (miniMapDisplay === true) {
+    renderMinimap(0, 0, 0.75, rays);
+  }
 }
 
 // loop speed limiter
@@ -284,6 +297,9 @@ document.addEventListener("keydown", (e) => {
   }
   if (e.key === "d") {
     player.speedX = 2;
+  }
+  if (e.key === "q") {
+    miniMapToggle();
   }
 });
 
