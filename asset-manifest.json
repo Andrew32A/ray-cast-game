@@ -1,16 +1,15 @@
 {
-  "main.css": "/ray-cast-game/static/css/main.994334c2.chunk.css",
-  "main.js": "/ray-cast-game/static/js/main.4386d72a.chunk.js",
-  "main.js.map": "/ray-cast-game/static/js/main.4386d72a.chunk.js.map",
-  "runtime~main.js": "/ray-cast-game/static/js/runtime~main.ef48659d.js",
-  "runtime~main.js.map": "/ray-cast-game/static/js/runtime~main.ef48659d.js.map",
+  "main.css": "/ray-cast-game/static/css/main.e35db2c3.chunk.css",
+  "main.js": "/ray-cast-game/static/js/main.60e0290f.chunk.js",
+  "main.js.map": "/ray-cast-game/static/js/main.60e0290f.chunk.js.map",
+  "runtime~main.js": "/ray-cast-game/static/js/runtime~main.25e604b4.js",
+  "runtime~main.js.map": "/ray-cast-game/static/js/runtime~main.25e604b4.js.map",
   "static/js/2.0b350a21.chunk.js": "/ray-cast-game/static/js/2.0b350a21.chunk.js",
   "static/js/2.0b350a21.chunk.js.map": "/ray-cast-game/static/js/2.0b350a21.chunk.js.map",
-  "static/js/3.d7f7bd74.chunk.js": "/ray-cast-game/static/js/3.d7f7bd74.chunk.js",
-  "static/js/3.d7f7bd74.chunk.js.map": "/ray-cast-game/static/js/3.d7f7bd74.chunk.js.map",
+  "static/js/3.d62f7fe7.chunk.js": "/ray-cast-game/static/js/3.d62f7fe7.chunk.js",
+  "static/js/3.d62f7fe7.chunk.js.map": "/ray-cast-game/static/js/3.d62f7fe7.chunk.js.map",
   "index.html": "/ray-cast-game/index.html",
-  "precache-manifest.e98355c6ceccee2530d33ad1bd7d2c10.js": "/ray-cast-game/precache-manifest.e98355c6ceccee2530d33ad1bd7d2c10.js",
+  "precache-manifest.e5a258ca2c52a8d3fa1a1df806d2aac1.js": "/ray-cast-game/precache-manifest.e5a258ca2c52a8d3fa1a1df806d2aac1.js",
   "service-worker.js": "/ray-cast-game/service-worker.js",
-  "static/css/main.994334c2.chunk.css.map": "/ray-cast-game/static/css/main.994334c2.chunk.css.map",
-  "static/media/logo.svg": "/ray-cast-game/static/media/logo.06e73328.svg"
+  "static/css/main.e35db2c3.chunk.css.map": "/ray-cast-game/static/css/main.e35db2c3.chunk.css.map"
 }
