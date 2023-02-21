@@ -42,6 +42,17 @@ const player = {
   angle: toRadians(0),
   speedY: 0,
   speedX: 0,
+  points: 0
+};
+
+// enemy settings
+const enemy = {
+  x: CELL_SIZE * 5,
+  y: CELL_SIZE * 5,
+  angle: toRadians(0),
+  speed: 1,
+  range: 1,
+  frozen: false
 };
 
 // init canvas with screen resolution
@@ -87,6 +98,8 @@ function renderMinimap(posX = 0, posY = 0, scale, rays) {
       }
     });
   });
+
+  // player
   context.fillStyle = "blue";
   context.fillRect(
     posX + player.x * scale - 10 / 2,
@@ -94,7 +107,7 @@ function renderMinimap(posX = 0, posY = 0, scale, rays) {
     10,
     10
   );
-
+  
   context.strokeStyle = "blue";
   context.beginPath();
   context.moveTo(player.x * scale, player.y * scale);
@@ -116,6 +129,15 @@ function renderMinimap(posX = 0, posY = 0, scale, rays) {
     context.closePath();
     context.stroke();
   });
+
+  // enemy
+  context.fillStyle = "red";
+  context.fillRect(
+    posX + enemy.x * scale - 10 / 2,
+    posY + enemy.y * scale - 10 / 2,
+    10,
+    10
+  );
 }
 
 function toRadians(deg) {
@@ -247,6 +269,50 @@ function movePlayer() {
   }
 }
 
+// enemy movement
+function moveEnemy() {
+  freezeEnemy();
+  const dx = player.x - enemy.x;
+  const dy = player.y - enemy.y;
+  const distance = Math.sqrt(dx * dx + dy * dy);
+  
+  if (distance > enemy.range) {
+    const speed = Math.min(enemy.speed, distance); // limit speed to avoid overshooting
+    enemy.x += (dx / distance) * speed;
+    enemy.y += (dy / distance) * speed;
+  } else {
+    enemy.x = player.x;
+    enemy.y = player.y;
+  }
+  
+  // console.log(`enemy coords: ${enemy.x} ${enemy.y}`)
+  // console.log(`player coords: ${player.x} ${player.y}`)
+}
+
+// when the player looks at the enemy, it'll freeze them
+function freezeEnemy() {
+  const dx = enemy.x - player.x;
+  const dy = enemy.y - player.y;
+  const angleToEnemy = Math.atan2(dy, dx);
+  const angleDifference = Math.abs(player.angle - angleToEnemy);
+
+  if (angleDifference < FOV / 2) {
+    enemy.frozen = true;
+    enemy.speed = 0;
+  } else {
+    enemy.frozen = false;
+    enemy.speed = 1;
+  }
+}
+
+// add points when enemy is not frozen
+function addPoints() {
+  if (enemy.frozen === false) {
+    player.points += 1;
+  }
+  console.log(player.points)
+}
+
 // render first person view
 function renderScene(rays) {
   rays.forEach((ray, i) => {
@@ -263,18 +329,37 @@ function renderScene(rays) {
     );
     context.fillStyle = COLORS.ceiling;
     context.fillRect(i, 0, 1, SCREEN_HEIGHT / 2 - wallHeight / 2);
+
+    const stripHeight = ((CELL_SIZE * 5) / distance) * 280;
+    const stripSize = 5;
+
+    context.fillStyle = "lightblue";
+    context.fillRect(
+      i - stripSize / 2,
+      SCREEN_HEIGHT / 2 - stripHeight / 2 - stripSize / 2,
+      stripSize,
+      stripSize
+    );
   });
+
+  // render points
+  context.font = "16px Arial";
+  context.fillStyle = "#0095DD";
+  context.fillText(`Points: ${player.points}`, SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.1);
 }
 
 // main loop
 function gameLoop() {
   clearScreen();
   movePlayer();
+  moveEnemy();
+  addPoints();
   const rays = getRays();
   renderScene(rays);
   if (miniMapDisplay === true) {
     renderMinimap(0, 0, 0.75, rays);
   }
+  
 }
 
 // loop speed limiter
