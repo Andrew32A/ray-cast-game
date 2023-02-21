@@ -42,6 +42,7 @@ const player = {
   angle: toRadians(0),
   speedY: 0,
   speedX: 0,
+  points: 0
 };
 
 // enemy settings
@@ -51,6 +52,7 @@ const enemy = {
   angle: toRadians(0),
   speed: 1,
   range: 1,
+  frozen: false
 };
 
 // init canvas with screen resolution
@@ -283,8 +285,8 @@ function moveEnemy() {
     enemy.y = player.y;
   }
   
-  console.log(`enemy coords: ${enemy.x} ${enemy.y}`)
-  console.log(`player coords: ${player.x} ${player.y}`)
+  // console.log(`enemy coords: ${enemy.x} ${enemy.y}`)
+  // console.log(`player coords: ${player.x} ${player.y}`)
 }
 
 // when the player looks at the enemy, it'll freeze them
@@ -295,10 +297,20 @@ function freezeEnemy() {
   const angleDifference = Math.abs(player.angle - angleToEnemy);
 
   if (angleDifference < FOV / 2) {
+    enemy.frozen = true;
     enemy.speed = 0;
   } else {
+    enemy.frozen = false;
     enemy.speed = 1;
   }
+}
+
+// add points when enemy is not frozen
+function addPoints() {
+  if (enemy.frozen === false) {
+    player.points += 1;
+  }
+  console.log(player.points)
 }
 
 // render first person view
@@ -329,6 +341,11 @@ function renderScene(rays) {
       stripSize
     );
   });
+
+  // render points
+  context.font = "16px Arial";
+  context.fillStyle = "#0095DD";
+  context.fillText(`Points: ${player.points}`, SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.1);
 }
 
 // main loop
@@ -336,6 +353,7 @@ function gameLoop() {
   clearScreen();
   movePlayer();
   moveEnemy();
+  addPoints();
   const rays = getRays();
   renderScene(rays);
   if (miniMapDisplay === true) {
