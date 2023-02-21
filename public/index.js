@@ -106,15 +106,6 @@ function renderMinimap(posX = 0, posY = 0, scale, rays) {
     10
   );
   
-  // enemy
-  context.fillStyle = "red";
-  context.fillRect(
-    posX + enemy.x * scale - 10 / 2,
-    posY + enemy.y * scale - 10 / 2,
-    10,
-    10
-  );
-
   context.strokeStyle = "blue";
   context.beginPath();
   context.moveTo(player.x * scale, player.y * scale);
@@ -136,6 +127,15 @@ function renderMinimap(posX = 0, posY = 0, scale, rays) {
     context.closePath();
     context.stroke();
   });
+
+  // enemy
+  context.fillStyle = "red";
+  context.fillRect(
+    posX + enemy.x * scale - 10 / 2,
+    posY + enemy.y * scale - 10 / 2,
+    10,
+    10
+  );
 }
 
 function toRadians(deg) {
@@ -269,6 +269,7 @@ function movePlayer() {
 
 // enemy movement
 function moveEnemy() {
+  freezeEnemy();
   const dx = player.x - enemy.x;
   const dy = player.y - enemy.y;
   const distance = Math.sqrt(dx * dx + dy * dy);
@@ -284,6 +285,20 @@ function moveEnemy() {
   
   console.log(`enemy coords: ${enemy.x} ${enemy.y}`)
   console.log(`player coords: ${player.x} ${player.y}`)
+}
+
+// when the player looks at the enemy, it'll freeze them
+function freezeEnemy() {
+  const dx = enemy.x - player.x;
+  const dy = enemy.y - player.y;
+  const angleToEnemy = Math.atan2(dy, dx);
+  const angleDifference = Math.abs(player.angle - angleToEnemy);
+
+  if (angleDifference < FOV / 2) {
+    enemy.speed = 0;
+  } else {
+    enemy.speed = 1;
+  }
 }
 
 // render first person view
