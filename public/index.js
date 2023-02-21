@@ -44,6 +44,15 @@ const player = {
   speedX: 0,
 };
 
+// enemy settings
+const enemy = {
+  x: CELL_SIZE * 5,
+  y: CELL_SIZE * 5,
+  angle: toRadians(0),
+  speed: 1,
+  range: 1,
+};
+
 // init canvas with screen resolution
 const canvas = document.createElement("canvas");
 canvas.setAttribute("width", SCREEN_WIDTH);
@@ -87,10 +96,21 @@ function renderMinimap(posX = 0, posY = 0, scale, rays) {
       }
     });
   });
+
+  // player
   context.fillStyle = "blue";
   context.fillRect(
     posX + player.x * scale - 10 / 2,
     posY + player.y * scale - 10 / 2,
+    10,
+    10
+  );
+  
+  // enemy
+  context.fillStyle = "red";
+  context.fillRect(
+    posX + enemy.x * scale - 10 / 2,
+    posY + enemy.y * scale - 10 / 2,
     10,
     10
   );
@@ -247,6 +267,25 @@ function movePlayer() {
   }
 }
 
+// enemy movement
+function moveEnemy() {
+  const dx = player.x - enemy.x;
+  const dy = player.y - enemy.y;
+  const distance = Math.sqrt(dx * dx + dy * dy);
+  
+  if (distance > enemy.range) {
+    const speed = Math.min(enemy.speed, distance); // limit speed to avoid overshooting
+    enemy.x += (dx / distance) * speed;
+    enemy.y += (dy / distance) * speed;
+  } else {
+    enemy.x = player.x;
+    enemy.y = player.y;
+  }
+  
+  console.log(`enemy coords: ${enemy.x} ${enemy.y}`)
+  console.log(`player coords: ${player.x} ${player.y}`)
+}
+
 // render first person view
 function renderScene(rays) {
   rays.forEach((ray, i) => {
@@ -263,6 +302,17 @@ function renderScene(rays) {
     );
     context.fillStyle = COLORS.ceiling;
     context.fillRect(i, 0, 1, SCREEN_HEIGHT / 2 - wallHeight / 2);
+
+    const stripHeight = ((CELL_SIZE * 5) / distance) * 280;
+    const stripSize = 5;
+
+    context.fillStyle = "lightblue";
+    context.fillRect(
+      i - stripSize / 2,
+      SCREEN_HEIGHT / 2 - stripHeight / 2 - stripSize / 2,
+      stripSize,
+      stripSize
+    );
   });
 }
 
@@ -270,11 +320,13 @@ function renderScene(rays) {
 function gameLoop() {
   clearScreen();
   movePlayer();
+  moveEnemy();
   const rays = getRays();
   renderScene(rays);
   if (miniMapDisplay === true) {
     renderMinimap(0, 0, 0.75, rays);
   }
+  
 }
 
 // loop speed limiter

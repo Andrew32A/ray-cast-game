@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
+// use hashrouter instead?
 import Title from './Title/Title';
 
 function loadGame() {
