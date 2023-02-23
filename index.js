@@ -2,9 +2,9 @@
 const map = [
   [1, 1, 1, 1, 1, 1, 1],
   [1, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 1, 1, 1, 1],
-  [1, 0, 0, 1, 0, 0, 1],
-  [1, 0, 0, 1, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 1],
   [1, 0, 0, 0, 0, 0, 1],
   [1, 0, 0, 0, 0, 0, 1],
   [1, 0, 1, 0, 1, 0, 1],
@@ -70,15 +70,15 @@ function clearScreen() {
 }
 
 // minimap toggle
-let miniMapDisplay = false;
+let miniMapDisplay = true;
 let counter = 0;
 function miniMapToggle() {
   counter++
   if (counter % 2 === 0) {
-      miniMapDisplay = false;
+      miniMapDisplay = true;
   }
   else {
-      miniMapDisplay = true;
+      miniMapDisplay = false;
   }
 }
 
@@ -271,37 +271,54 @@ function movePlayer() {
 
 // enemy movement
 function moveEnemy() {
-  freezeEnemy();
   const dx = player.x - enemy.x;
   const dy = player.y - enemy.y;
   const distance = Math.sqrt(dx * dx + dy * dy);
   
-  if (distance > enemy.range) {
-    const speed = Math.min(enemy.speed, distance); // limit speed to avoid overshooting
-    enemy.x += (dx / distance) * speed;
-    enemy.y += (dy / distance) * speed;
-  } else {
-    enemy.x = player.x;
-    enemy.y = player.y;
-  }
+  if (distance > enemy.range && enemy.frozen === false) {
+    enemy.x += (dx / distance) * enemy.speed;
+    enemy.y += (dy / distance) * enemy.speed;
+  } 
   
   // console.log(`enemy coords: ${enemy.x} ${enemy.y}`)
   // console.log(`player coords: ${player.x} ${player.y}`)
 }
 
-// when the player looks at the enemy, it'll freeze them
+// when the player looks at the enemy, freeze the enemy
 function freezeEnemy() {
+  let rotationFix;
+  if (player.angle > 2.5) {
+    rotationFix = player.angle - 2;
+  } else if (player.angle < -2.5) {
+    rotationFix = player.angle + 2;
+  } else {
+    rotationFix = player.angle
+  }
+
   const dx = enemy.x - player.x;
   const dy = enemy.y - player.y;
   const angleToEnemy = Math.atan2(dy, dx);
-  const angleDifference = Math.abs(player.angle - angleToEnemy);
+  const angleDifference = Math.abs(rotationFix - angleToEnemy);
 
   if (angleDifference < FOV / 2) {
-    enemy.frozen = true;
     enemy.speed = 0;
+    enemy.frozen = true;
   } else {
-    enemy.frozen = false;
     enemy.speed = 1;
+    enemy.frozen = false;
+  }
+  console.log('player angle:', player.angle)
+  console.log('rotation fix:', rotationFix)
+  console.log('angleToEnemy:', angleToEnemy);
+  console.log('angleDifference:', angleDifference);
+  console.log('FOV:', FOV);
+}
+
+function playerAngleFix() {
+  if (player.angle > 6) {
+    player.angle = 0;
+  } else if (player.angle < -6) {
+    player.angle = 0;
   }
 }
 
@@ -353,6 +370,8 @@ function gameLoop() {
   clearScreen();
   movePlayer();
   moveEnemy();
+  freezeEnemy();
+  playerAngleFix(); // my sanity
   addPoints();
   const rays = getRays();
   renderScene(rays);
