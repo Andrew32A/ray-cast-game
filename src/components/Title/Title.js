@@ -5,20 +5,13 @@ import React from 'react';
 function Title() {
     return (
         <div className="Title">
-        <header>
-            <h1>Ray Cast Demo</h1>
-            <div className="Title-Subtitle"></div>
-
-            <div>
-                {/* <NavLink 
-                    className={({ isActive }) => isActive ? "nav-link-active" : "nav-link" }
-                    to="/">List</NavLink>
-                <NavLink 
-                    className={({ isActive }) => isActive ? "nav-link-active" : "nav-link" }
-                    to="/about">About</NavLink>
-                <RandomSpace /> */}
-            </div>
-
+        <header className='title-wrapper'>
+            <section>
+                <div className="content">
+                    <h2>Ray Cast Demo</h2>
+                    <h2>Ray Cast Demo</h2>
+                </div>
+            </section>
         </header>
         </div>
     )
