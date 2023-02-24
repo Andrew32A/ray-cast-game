@@ -308,15 +308,16 @@ function moveEnemy() {
 }
 
 // when the player looks at the enemy, freeze the enemy
-function freezeEnemy(bool) {
-  if (bool === "freeze") {
+function freezeEnemy(rays) {
+  const anyRayWithEnemy = rays.some(ray => ray.withEnemy);
+  
+  if (anyRayWithEnemy) {
     enemy.speed = 0;
     enemy.frozen = true;
   } else {
     enemy.speed = 1;
     enemy.frozen = false;
   }
-  console.log("is enemy frozen?", enemy.frozen)
 }
 
 // add points when enemy is not frozen
@@ -324,7 +325,6 @@ function addPoints() {
   if (enemy.frozen === false) {
     player.points += 1;
   }
-  console.log(player.points)
 }
 
 // render first person view
@@ -334,6 +334,12 @@ function renderScene(rays) {
     const wallHeight = ((CELL_SIZE * 5) / distance) * 277;
     context.fillStyle = ray.vertical ? COLORS.wallDark : COLORS.wall;
     context.fillRect(i, SCREEN_HEIGHT / 2 - wallHeight / 2, 1, wallHeight);
+
+    if (ray.withEnemy === true) {
+      context.fillStyle = ray.withEnemy ? "red" : "blue";
+      context.fillRect(i, 0, 1, SCREEN_HEIGHT);
+    }
+
     context.fillStyle = COLORS.floor;
     context.fillRect(
       i,
@@ -342,25 +348,11 @@ function renderScene(rays) {
       SCREEN_HEIGHT / 2 - wallHeight / 2
     );
 
-
-    // const enemyHeight = ((CELL_SIZE * 5) / distance) * 277;
-    // // context.fillStyle = ray.withEnemy ? "red" : "red";
-    // context.fillRect(i+1, SCREEN_HEIGHT / 2 - enemyHeight / 2, 1, enemyHeight);
-    // // context.fillStyle = COLORS.floor;
-    // context.fillRect(
-    //   i+1,
-    //   SCREEN_HEIGHT / 2 + enemyHeight / 2,
-    //   1,
-    //   SCREEN_HEIGHT / 2 - enemyHeight / 2
-    // );
-
-
     context.fillStyle = COLORS.ceiling;
     context.fillRect(i, 0, 1, SCREEN_HEIGHT / 2 - wallHeight / 2);
 
     const stripHeight = ((CELL_SIZE * 5) / distance) * 280;
     const stripSize = 5;
-
     context.fillStyle = "lightblue";
     context.fillRect(
       i - stripSize / 2,
@@ -383,11 +375,11 @@ function gameLoop() {
   moveEnemy();
   addPoints();
   const rays = getRays();
+  freezeEnemy(rays);
   renderScene(rays);
   if (miniMapDisplay === true) {
     renderMinimap(0, 0, 0.75, rays);
   }
-  
 }
 
 // loop speed limiter
