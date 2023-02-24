@@ -11,9 +11,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <Router>
       <Routes>
-        <Route path='/ray-cast-game' element={<App />}>
-          <Route path='/ray-cast-game' element={<App />} />
-          <Route path='/ray-cast-game/HowToPlay' element={<HowToPlay />} />
+        <Route path='/' element={<App />}>
+          <Route path='/HowToPlay' element={<HowToPlay />} />
         </Route>
       </Routes>
     </Router>
