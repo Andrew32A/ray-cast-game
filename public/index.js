@@ -308,8 +308,10 @@ function moveEnemy() {
 }
 
 // when the player looks at the enemy, freeze the enemy
-function freezeEnemy(angle) {
-  if (angle.withEnemy === true) {
+function freezeEnemy(rays) {
+  const anyRayWithEnemy = rays.some(ray => ray.withEnemy);
+  
+  if (anyRayWithEnemy) {
     enemy.speed = 0;
     enemy.frozen = true;
   } else {
@@ -373,6 +375,7 @@ function gameLoop() {
   moveEnemy();
   addPoints();
   const rays = getRays();
+  freezeEnemy(rays);
   renderScene(rays);
   if (miniMapDisplay === true) {
     renderMinimap(0, 0, 0.75, rays);
