@@ -375,7 +375,7 @@ function gameLoop() {
   moveEnemy();
   addPoints();
   const rays = getRays();
-  freezeEnemy(rays);
+  // freezeEnemy(rays);
   renderScene(rays);
   if (miniMapDisplay === true) {
     renderMinimap(0, 0, 0.75, rays);
