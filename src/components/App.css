@@ -1,19 +1,14 @@
-/* .App-logo {
-  height: 40vmin;
-  pointer-events: none;
-} */
-
-.menuWrapper {
+/* .menuWrapper {
   text-align: center;
-}
+} */
 
 .menuHeader {
   background-color: #282c34;
   min-height: 100vh;
-  display: flex;
+  display: flex-start;  
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: left;
+  justify-content: flex-start;
   font-size: calc(10px + 2vmin);
   color: white;
 }

@@ -1,6 +1,4 @@
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
 }
@@ -14,8 +12,9 @@
 } */
 
 .content {
-    position: relative;
-    padding-bottom: 4em;
+    padding-top: 4em;
+    padding-bottom: 5em;
+    padding-left: 10em;
 }
 
 .content h2 {
