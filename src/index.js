@@ -4,21 +4,19 @@ import './index.css';
 import App from './components/App';
 import HowToPlay from './components/HowToPlay/HowToPlay';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  <React.StrictMode>
     <Router>
       <Routes>
-        <Route path='/' element={<App />}>
-          <Route path='/HowToPlay' element={<HowToPlay />} />
+        <Route path='/ray-cast-game' element={<App />}>
+          <Route path='/ray-cast-game' element={<App />} />
+          <Route path='/ray-cast-game/HowToPlay' element={<HowToPlay />} />
         </Route>
       </Routes>
     </Router>
-
-  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

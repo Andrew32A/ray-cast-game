@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import { Link } from 'react-router-dom';
-// use hashrouter instead?
 import Title from './Title/Title';
 
 function loadGame() {
@@ -16,8 +15,12 @@ function App() {
       <header className="menuHeader">
           <Title />
           {/* ray-cast-game/ is necessary for github pages, remove it if only using npm start */}
-          <Link to="game.html" className='startButton' onClick={loadGame}>Start</Link>
-          <Link to="/HowToPlay">How to Play</Link>
+          <ul>
+            <li><Link to="ray-cast-game/game.html" className='startButton' onClick={loadGame}>Start</Link></li>
+            <li><Link to="ray-cast-game/Sandbox">Sandbox (not yet linked)</Link></li>
+            <li><Link to="ray-cast-game/HowToPlay">How to Play</Link></li>
+            <li><Link to="https://github.com/Andrew32A/ray-cast-game">Repo</Link></li>
+          </ul>
       </header>
     </div>
   );
