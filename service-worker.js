@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/ray-cast-game/precache-manifest.102c920709259f116fe056d1f59eaaea.js"
+  "/ray-cast-game/precache-manifest.c1eb4073547ccac9d0f6d5bbc2f744d6.js"
 );
 
 workbox.clientsClaim();
