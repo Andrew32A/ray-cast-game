@@ -1,7 +1,7 @@
 {
   "main.css": "/ray-cast-game/static/css/main.7be47266.chunk.css",
-  "main.js": "/ray-cast-game/static/js/main.fe91015c.chunk.js",
-  "main.js.map": "/ray-cast-game/static/js/main.fe91015c.chunk.js.map",
+  "main.js": "/ray-cast-game/static/js/main.978edc40.chunk.js",
+  "main.js.map": "/ray-cast-game/static/js/main.978edc40.chunk.js.map",
   "runtime~main.js": "/ray-cast-game/static/js/runtime~main.2703220f.js",
   "runtime~main.js.map": "/ray-cast-game/static/js/runtime~main.2703220f.js.map",
   "static/js/2.67f4bb6c.chunk.js": "/ray-cast-game/static/js/2.67f4bb6c.chunk.js",
@@ -9,7 +9,7 @@
   "static/js/3.5d65379c.chunk.js": "/ray-cast-game/static/js/3.5d65379c.chunk.js",
   "static/js/3.5d65379c.chunk.js.map": "/ray-cast-game/static/js/3.5d65379c.chunk.js.map",
   "index.html": "/ray-cast-game/index.html",
-  "precache-manifest.c04be1dae213e7b6d1d2dda1e11aa7ee.js": "/ray-cast-game/precache-manifest.c04be1dae213e7b6d1d2dda1e11aa7ee.js",
+  "precache-manifest.25872e967e874276472f027aeeb56bad.js": "/ray-cast-game/precache-manifest.25872e967e874276472f027aeeb56bad.js",
   "service-worker.js": "/ray-cast-game/service-worker.js",
   "static/css/main.7be47266.chunk.css.map": "/ray-cast-game/static/css/main.7be47266.chunk.css.map"
 }
