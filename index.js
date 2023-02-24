@@ -181,6 +181,7 @@ function getVCollision(angle) {
       nextX += xA;
       nextY += yA;
     } else {
+      enemy.frozen = true
     }
   }
   return {
@@ -203,6 +204,7 @@ function getHCollision(angle) {
   let wall;
   let nextX = firstX;
   let nextY = firstY;
+  
   while (!wall) {
     const cellX = Math.floor(nextX / CELL_SIZE);
     const cellY = up
@@ -286,19 +288,17 @@ function moveEnemy() {
 
 // when the player looks at the enemy, freeze the enemy
 function freezeEnemy() {
-  let rotationFix;
-  if (player.angle > 2.5) {
-    rotationFix = player.angle - 2;
-  } else if (player.angle < -2.5) {
-    rotationFix = player.angle + 2;
+  let rotationFix = Math.abs(player.angle);
+  if (rotationFix > 2.5) {
+    rotationFix = Math.abs(player.angle - 2.5);
   } else {
-    rotationFix = player.angle
+    Math.abs(player.angle)
   }
 
   const dx = enemy.x - player.x;
   const dy = enemy.y - player.y;
   const angleToEnemy = Math.atan2(dy, dx);
-  const angleDifference = Math.abs(rotationFix - angleToEnemy);
+  const angleDifference = Math.abs(rotationFix- angleToEnemy);
 
   if (angleDifference < FOV / 2) {
     enemy.speed = 0;
@@ -308,10 +308,11 @@ function freezeEnemy() {
     enemy.frozen = false;
   }
   console.log('player angle:', player.angle)
-  console.log('rotation fix:', rotationFix)
+  // console.log('rotation fix:', rotationFix)
   console.log('angleToEnemy:', angleToEnemy);
   console.log('angleDifference:', angleDifference);
-  console.log('FOV:', FOV);
+  console.log('FOV/2:', FOV/2);
+  console.log('isEnemyFrozen:', enemy.frozen);
 }
 
 function playerAngleFix() {
@@ -369,8 +370,8 @@ function renderScene(rays) {
 function gameLoop() {
   clearScreen();
   movePlayer();
-  moveEnemy();
-  freezeEnemy();
+  // moveEnemy();
+  // freezeEnemy();
   playerAngleFix(); // my sanity
   addPoints();
   const rays = getRays();
