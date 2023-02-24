@@ -177,11 +177,22 @@ function getVCollision(angle) {
       break;
     }
     wall = map[cellY][cellX];
+
+    // check for collision with enemy
+    const distToEnemy = distance(enemy.x, enemy.y, nextX, nextY);
+    if (distToEnemy < 10) {
+      return {
+        angle,
+        distance: distance(player.x, player.y, nextX, nextY),
+        vertical: false,
+        withEnemy: true, // indicate that collision was with enemy
+      };
+    }
+
     if (!wall) {
       nextX += xA;
       nextY += yA;
     } else {
-      enemy.frozen = true
     }
   }
   return {
@@ -210,17 +221,30 @@ function getHCollision(angle) {
     const cellY = up
       ? Math.floor(nextY / CELL_SIZE) - 1
       : Math.floor(nextY / CELL_SIZE);
-
+  
     if (outOfMapBounds(cellX, cellY)) {
       break;
     }
-
+  
     wall = map[cellY][cellX];
+    
+    // check for collision with enemy
+    const distToEnemy = distance(enemy.x, enemy.y, nextX, nextY);
+    if (distToEnemy < 10) {
+      return {
+        angle,
+        distance: distance(player.x, player.y, nextX, nextY),
+        vertical: false,
+        withEnemy: true, // indicate that collision was with enemy
+      };
+    }
+  
     if (!wall) {
       nextX += xA;
       nextY += yA;
     }
   }
+
   return {
     angle,
     distance: distance(player.x, player.y, nextX, nextY),
@@ -281,46 +305,18 @@ function moveEnemy() {
     enemy.x += (dx / distance) * enemy.speed;
     enemy.y += (dy / distance) * enemy.speed;
   } 
-  
-  // console.log(`enemy coords: ${enemy.x} ${enemy.y}`)
-  // console.log(`player coords: ${player.x} ${player.y}`)
 }
 
 // when the player looks at the enemy, freeze the enemy
-function freezeEnemy() {
-  let rotationFix = Math.abs(player.angle);
-  if (rotationFix > 2.5) {
-    rotationFix = Math.abs(player.angle - 2.5);
-  } else {
-    Math.abs(player.angle)
-  }
-
-  const dx = enemy.x - player.x;
-  const dy = enemy.y - player.y;
-  const angleToEnemy = Math.atan2(dy, dx);
-  const angleDifference = Math.abs(rotationFix- angleToEnemy);
-
-  if (angleDifference < FOV / 2) {
+function freezeEnemy(bool) {
+  if (bool === "freeze") {
     enemy.speed = 0;
     enemy.frozen = true;
   } else {
     enemy.speed = 1;
     enemy.frozen = false;
   }
-  console.log('player angle:', player.angle)
-  // console.log('rotation fix:', rotationFix)
-  console.log('angleToEnemy:', angleToEnemy);
-  console.log('angleDifference:', angleDifference);
-  console.log('FOV/2:', FOV/2);
-  console.log('isEnemyFrozen:', enemy.frozen);
-}
-
-function playerAngleFix() {
-  if (player.angle > 6) {
-    player.angle = 0;
-  } else if (player.angle < -6) {
-    player.angle = 0;
-  }
+  console.log("is enemy frozen?", enemy.frozen)
 }
 
 // add points when enemy is not frozen
@@ -345,6 +341,20 @@ function renderScene(rays) {
       1,
       SCREEN_HEIGHT / 2 - wallHeight / 2
     );
+
+
+    // const enemyHeight = ((CELL_SIZE * 5) / distance) * 277;
+    // // context.fillStyle = ray.withEnemy ? "red" : "red";
+    // context.fillRect(i+1, SCREEN_HEIGHT / 2 - enemyHeight / 2, 1, enemyHeight);
+    // // context.fillStyle = COLORS.floor;
+    // context.fillRect(
+    //   i+1,
+    //   SCREEN_HEIGHT / 2 + enemyHeight / 2,
+    //   1,
+    //   SCREEN_HEIGHT / 2 - enemyHeight / 2
+    // );
+
+
     context.fillStyle = COLORS.ceiling;
     context.fillRect(i, 0, 1, SCREEN_HEIGHT / 2 - wallHeight / 2);
 
@@ -370,9 +380,7 @@ function renderScene(rays) {
 function gameLoop() {
   clearScreen();
   movePlayer();
-  // moveEnemy();
-  // freezeEnemy();
-  playerAngleFix(); // my sanity
+  moveEnemy();
   addPoints();
   const rays = getRays();
   renderScene(rays);
