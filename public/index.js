@@ -339,9 +339,9 @@ function addPoints() {
 // preload textures for enemy
 let pattern;
 const textureImage = new Image();
-textureImage.src = "./textures/space.jpeg";
+textureImage.src = "./textures/enemy.png";
 textureImage.onload = function() {
-  return pattern = context.createPattern(textureImage, "repeat");
+  return pattern = context.createPattern(textureImage, "no-repeat");
 }
 
 // render first person view
@@ -438,4 +438,3 @@ const mouseSensitivity = 0.05;
 document.addEventListener("mousemove", function (event) {
   player.angle += toRadians(event.movementX) * mouseSensitivity;
 });
-
