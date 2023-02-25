@@ -336,6 +336,14 @@ function addPoints() {
   }
 }
 
+// preload textures for enemy
+let pattern;
+const textureImage = new Image();
+textureImage.src = "./textures/enemy.png";
+textureImage.onload = function() {
+  return pattern = context.createPattern(textureImage, "no-repeat");
+}
+
 // render first person view
 function renderScene(rays) {
   rays.forEach((ray, i) => {
@@ -345,7 +353,7 @@ function renderScene(rays) {
     context.fillRect(i, SCREEN_HEIGHT / 2 - wallHeight / 2, 1, wallHeight);
 
     if (ray.withEnemy === true) {
-      context.fillStyle = ray.withEnemy ? "red" : "blue";
+      context.fillStyle = pattern;
       context.fillRect(i, 0, 1, SCREEN_HEIGHT);
     }
 
@@ -430,4 +438,3 @@ const mouseSensitivity = 0.05;
 document.addEventListener("mousemove", function (event) {
   player.angle += toRadians(event.movementX) * mouseSensitivity;
 });
-
