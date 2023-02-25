@@ -9,13 +9,14 @@ import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-    <Router>
-      <Routes>
-        <Route path='/' element={<App />}>
-          <Route path='/HowToPlay' element={<HowToPlay />} />
-        </Route>
-      </Routes>
-    </Router>
+  <Router>
+    <Routes>
+      <Route path='/'>
+        <Route index element={<App />} />
+        <Route path='/HowToPlay' element={<HowToPlay />} />
+      </Route>
+    </Routes>
+  </Router>
 );
 
 // If you want to start measuring performance in your app, pass a function

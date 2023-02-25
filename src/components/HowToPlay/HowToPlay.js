@@ -1,12 +1,14 @@
-import "./HowToPlay.css"
 import React from 'react';
+import "./HowToPlay.css"
+import App from '../App';
 
 function HowToPlay() {
     return (
         <div className="HowToPlay">
+            {/* <App /> */}
             {/* <section> */}
                 {/* <div className="content"> */}
-                    <p>press buttons, game go brr</p>
+                    <div className='howto'>press buttons, game go brr</div>
                 {/* </div>
             </section> */}
         </div>
