@@ -4,6 +4,15 @@ const map = [
   [1, 0, 0, 0, 0, 0, 1],
   [1, 0, 0, 0, 0, 0, 1],
   [1, 0, 0, 0, 0, 0, 1],
+  [1, 1, 0, 0, 0, 0, 1],
+  [1, 1, 0, 0, 0, 0, 1],
+  [1, 1, 0, 0, 0, 0, 1],
+  [1, 1, 0, 0, 0, 1, 1],
+  [1, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 1],
+  [1, 1, 0, 1, 1, 1, 1],
+  [1, 0, 0, 0, 0, 0, 1],
   [1, 0, 0, 0, 0, 0, 1],
   [1, 0, 0, 0, 0, 0, 1],
   [1, 0, 0, 0, 0, 0, 1],
@@ -50,7 +59,7 @@ const enemy = {
   x: CELL_SIZE * 5,
   y: CELL_SIZE * 5,
   angle: toRadians(0),
-  speed: 1,
+  speed: 1.5,
   range: 1,
   frozen: false
 };
@@ -315,7 +324,7 @@ function freezeEnemy(rays) {
     enemy.speed = 0;
     enemy.frozen = true;
   } else {
-    enemy.speed = 1;
+    enemy.speed = 1.5;
     enemy.frozen = false;
   }
 }
@@ -375,7 +384,7 @@ function gameLoop() {
   moveEnemy();
   addPoints();
   const rays = getRays();
-  // freezeEnemy(rays);
+  freezeEnemy(rays);
   renderScene(rays);
   if (miniMapDisplay === true) {
     renderMinimap(0, 0, 0.75, rays);
