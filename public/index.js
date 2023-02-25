@@ -336,6 +336,14 @@ function addPoints() {
   }
 }
 
+// preload textures for enemy
+let pattern;
+const textureImage = new Image();
+textureImage.src = "./textures/space.jpeg";
+textureImage.onload = function() {
+  return pattern = context.createPattern(textureImage, "repeat");
+}
+
 // render first person view
 function renderScene(rays) {
   rays.forEach((ray, i) => {
@@ -345,7 +353,7 @@ function renderScene(rays) {
     context.fillRect(i, SCREEN_HEIGHT / 2 - wallHeight / 2, 1, wallHeight);
 
     if (ray.withEnemy === true) {
-      context.fillStyle = ray.withEnemy ? "red" : "blue";
+      context.fillStyle = pattern;
       context.fillRect(i, 0, 1, SCREEN_HEIGHT);
     }
 
