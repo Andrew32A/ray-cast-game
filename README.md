@@ -6,9 +6,9 @@ In this game, you are a player trying to avoid an enemy. If the enemy touches yo
 
 ## To play the game, use the following controls:
 
-WASD - Move </br>
-Mouse - Camera angle </br>
-Q - Toggle minimap </br>
+- WASD - Move </br>
+- Mouse - Camera angle </br>
+- Q - Toggle minimap </br>
 
 ## To run the game locally, you'll need to clone this repository and run the following commands:
 
