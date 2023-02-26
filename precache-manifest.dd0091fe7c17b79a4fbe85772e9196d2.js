@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "2e749ff52837618f70fb",
+    "revision": "41e1d25d3cb14fa9ee7d",
     "url": "/ray-cast-game/static/css/main.5c94ad6d.chunk.css"
   },
   {
-    "revision": "2e749ff52837618f70fb",
-    "url": "/ray-cast-game/static/js/main.42c099bf.chunk.js"
+    "revision": "41e1d25d3cb14fa9ee7d",
+    "url": "/ray-cast-game/static/js/main.e32c96ae.chunk.js"
   },
   {
     "revision": "7a832e6d1cb111474fb1",
@@ -24,7 +24,7 @@ self.__precacheManifest = [
     "url": "/ray-cast-game/static/media/linesndots.2aa1e8da.jpeg"
   },
   {
-    "revision": "b95a4c0ab5a797ee31e55f77d6951452",
+    "revision": "ecfe8b567df38c8fa95a65c669feba39",
     "url": "/ray-cast-game/index.html"
   }
 ];
