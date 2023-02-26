@@ -1,3 +1,31 @@
-.howto {
-    font-size: 100px;
+/* body {
+    background-image: url("../images/linesndots.jpeg");
+    background-size: cover;
+} */
+
+.controls-title, .rules-title {
+    font-size: 2em;
+}
+
+.rules {
+    padding-top: 2em;
+    padding-bottom: 2em;
+    padding-left: 4em;
+    font-size: 1.5em;
+    color: #fff;
+}
+
+.controls {
+    padding-bottom: 5em;
+    padding-left: 4em;
+    font-size: 1.5em;
+    color: #fff;
+}
+
+.bolded-red {
+    color: red;
+}
+
+.bolded-blue {
+    color: #03a9f4;
 }
