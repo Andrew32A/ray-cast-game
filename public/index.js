@@ -29,10 +29,10 @@ const FOV = toRadians(75);
 
 // colors
 const COLORS = {
-  floor: "#654321", // "#ff6361"
-  ceiling: "#140d07", // "#012975",
-  wall: "#332211", // "#58508d"
-  wallDark: "#281b0d", // "#003f5c"
+  floor: "#595958", //"#654321", // "#ff6361"
+  ceiling: "#0D0D0D", //"#140d07", // "#012975",
+  wall: "#404040", //"#332211", // "#58508d"
+  wallDark: "#262626", //"#281b0d", // "#003f5c"
   rays: "#ffa600",
 };
 
@@ -45,8 +45,8 @@ const TEXTURES = {
 
 // player settings
 const player = {
-  x: CELL_SIZE * 1.5,
-  y: CELL_SIZE * 2,
+  x: CELL_SIZE * 3,
+  y: CELL_SIZE * 9,
   angle: toRadians(0),
   speedY: 0,
   speedX: 0,
@@ -55,10 +55,10 @@ const player = {
 
 // enemy settings
 const enemy = {
-  x: CELL_SIZE * 5,
-  y: CELL_SIZE * 5,
+  x: CELL_SIZE * 6.5,
+  y: CELL_SIZE * 9,
   angle: toRadians(0),
-  speed: 2.5,
+  speed: 2,
   range: 1,
   frozen: false
 };
@@ -323,7 +323,7 @@ function freezeEnemy(rays) {
     enemy.speed = 0;
     enemy.frozen = true;
   } else {
-    enemy.speed = 2.5;
+    enemy.speed = 2;
     enemy.frozen = false;
   }
 }
@@ -338,7 +338,7 @@ function addPoints() {
 // preload textures for enemy
 let pattern;
 const textureImage = new Image();
-textureImage.src = "./textures/enemy.png";
+textureImage.src = "./textures/enemy_small.png";
 textureImage.onload = function() {
   return pattern = context.createPattern(textureImage, "no-repeat");
 }
@@ -384,8 +384,18 @@ function renderScene(rays) {
   context.fillText(`Points: ${player.points}`, SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.1);
 }
 
+// game over
+function gameOver() {
+  const distance = Math.sqrt((player.x - enemy.x) ** 2 + (player.y - enemy.y) ** 2);
+  if (distance < 10) {
+    clearInterval(interval);
+    window.location.assign("./gameOverScreen/gameOver.html")
+  }
+}
+
 // main loop
 function gameLoop() {
+  gameOver();
   clearScreen();
   movePlayer();
   moveEnemy();
@@ -399,7 +409,7 @@ function gameLoop() {
 }
 
 // loop speed limiter
-setInterval(gameLoop, TICK);
+const interval = setInterval(gameLoop, TICK);
 
 // controls
 canvas.addEventListener("click", () => {
