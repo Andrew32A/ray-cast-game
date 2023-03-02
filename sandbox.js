@@ -291,11 +291,6 @@ const map = [
         stripSize
       );
     });
-  
-    // render points
-    context.font = "16px Arial";
-    context.fillStyle = "#0095DD";
-    context.fillText(`Points: ${player.points}`, SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.1);
   }
   
   // main loop
