@@ -29,5 +29,4 @@ npm start
 - Flashlight mechanic that uses batteries spawned randomly in the map
 - Enemy polygons
 - More levels
-- Game over screen
 - Mechanic where if the player looks at the enemy too long it'll trigger a game over
