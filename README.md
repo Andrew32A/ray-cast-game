@@ -24,7 +24,7 @@ npm install
 npm start
 ```
 
-## Fetures I'd like to add:
+## Fetures I'd like to add and TODO list:
 - Perspective correct texture mapping
 - Flashlight mechanic that uses batteries spawned randomly in the map
 - Enemy polygons
