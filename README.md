@@ -1,4 +1,4 @@
-# Ray Cast Game
+# Ray Cast Game:
 I was inspired by classic games like Wolfenstein to create my own demo using ray casting technology. It was a challenging and time-consuming process that required countless hours of research and experimentation, but I eventually managed to piece together a basic game that showcases the power of this technique. Using ray casting, I was able to create a unique 2.5D world that is both immersive and engaging to explore. 
 
 Despite encountering many obstacles and setbacks, I was determined to see the project through to completion, and I'm proud of what I've achieved. If you're a fan of old school games or simply looking for a new and exciting gaming experience, I invite you to try out my Ray Cast Game and immerse yourself in its captivating world!
