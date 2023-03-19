@@ -32,3 +32,4 @@ npm start
 - Mechanic where if the player looks at the enemy too long it'll trigger a game over
 - Fix performance bug on certain devices
 - Improve main menu (animated background, logo, and styling)
+- Lighting and shadows
